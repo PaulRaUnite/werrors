@@ -1,12 +1,8 @@
 package service_errors
 
 import (
-	"strconv"
-
-	"github.com/valyala/fasthttp"
+	"errors"
 )
-
-var Nil = Error{fasthttp.StatusOK, nil}
 
 type Error struct {
 	//unexported fields
@@ -15,9 +11,13 @@ type Error struct {
 }
 
 func (e Error) Error() string {
-	return "{code: " + strconv.Itoa(e.code) + ", expl: \"" + e.error.Error() + "\"}"
+	return e.error.Error()
 }
 
-func New(error error, code int) Error {
-	return Error{code, error}
+func (e Error) Marshal() string {
+	return "{error: \"" + e.error.Error() + "\"}"
+}
+
+func New(error string, code int) Error {
+	return Error{code, errors.New(error)}
 }
