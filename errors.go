@@ -2,6 +2,7 @@ package service_errors
 
 import (
 	"errors"
+	"github.com/valyala/fasthttp"
 )
 
 type Error struct {
@@ -18,6 +19,10 @@ func (e Error) Marshal() string {
 	return "{error: \"" + e.error.Error() + "\"}"
 }
 
-func New(error string, code int) Error {
-	return Error{code, errors.New(error)}
+func (e Error) String() string {
+	return e.error.Error() + " " + fasthttp.StatusMessage(e.code)
+}
+
+func New(error string, code int) *Error {
+	return &Error{code, errors.New(error)}
 }
