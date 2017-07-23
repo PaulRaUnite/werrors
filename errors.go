@@ -19,7 +19,9 @@ func New(message string) error {
 	return errorString(message)
 }
 
-// tracker wraps errors to track error path.
+// tracker is a struct that is used
+// to wrap errors for tracking
+// error path.
 type tracker struct {
 	annotation string
 	err        error
@@ -29,13 +31,21 @@ func (w tracker) Error() string {
 	return fmt.Sprintf("%s *> %s", w.annotation, w.err.Error())
 }
 
-// Wrap annotates the error with the string.
+// Wrap annotates an error with a string.
 // Use it to track paths of errors, as:
 // main *> calc *> error text.
-func Wrap(annotation string, err error) error {
+func Wrap(err error, annotation string) error {
 	return tracker{
 		annotation: annotation,
 		err:        err,
+	}
+}
+
+// Wrapf annotates an error using formatting.
+func Wrapf(err error, format string, args ...interface{}) error {
+	return tracker{
+		annotation: fmt.Sprintf(format, args...),
+		err: err,
 	}
 }
 
@@ -49,19 +59,31 @@ func Cause(err error) error {
 	return Cause(c.err)
 }
 
-// DefWrap is expected to use in
-// defer statements for tracking
-// errors, as follow:
+// DefWrap annotates an POINTER of
+// error to allow an user use it
+// in defer statements.
+// Example:
 // func f() (err error) {
 //   defer DefWrap("text", &err)
 //   //some actions
 //   return
 // }
-func DefWrap(annotation string, errp *error) {
+func DefWrap(errp *error, annotation string) {
 	if errp != nil {
 		err := *errp
 		if err != nil {
-			*errp = Wrap(annotation, err)
+			*errp = Wrap(err, annotation)
+		}
+	}
+}
+
+// DefWrapf does everything that DefWrap
+// and Wrapf do.
+func DefWrapf(errp *error, format string, args ...interface{}) {
+	if errp != nil {
+		err := *errp
+		if err != nil {
+			*errp = Wrapf(err, format, args...)
 		}
 	}
 }
