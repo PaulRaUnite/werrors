@@ -57,7 +57,7 @@ Of course, allocation free functions are faster.
   
 ## Documentation + Examples
 
-See [godoc](https://godoc.com/github.com/PaulRaUnite/werrors)
+See [godoc](https://godoc.org/github.com/PaulRaUnite/werrors)
 
 ## Collaboration
 
