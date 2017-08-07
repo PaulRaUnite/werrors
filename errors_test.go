@@ -1,18 +1,13 @@
 package werrors
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 )
 
-func TestNew(t *testing.T) {
-	err := New("message")
-	if err.Error() != "message" {
-		t.Fatal("string corruption", err)
-	}
-}
-
 func TestWrap(t *testing.T) {
-	err := New("message")
+	err := errors.New("message")
 	err = Wrap(err, "test")
 	if err.Error() != "test *> message" {
 		t.Fatal("the text is incorrect", err)
@@ -20,7 +15,7 @@ func TestWrap(t *testing.T) {
 }
 
 func TestCause(t *testing.T) {
-	err := New("message")
+	err := errors.New("message")
 	err = Wrap(err, "test")
 	if Cause(err).Error() != "message" {
 		t.Fatal("cause of error is not match", err)
@@ -29,7 +24,7 @@ func TestCause(t *testing.T) {
 
 func f() (err error) {
 	defer DefWrap(&err, "test")
-	err = New("message")
+	err = errors.New("message")
 	return
 }
 
@@ -40,9 +35,8 @@ func TestDefWrap(t *testing.T) {
 	}
 }
 
-
 func TestWrapf(t *testing.T) {
-	err := New("message")
+	err := errors.New("message")
 	err = Wrapf(err, "test(a:%s)", "hello")
 	if err.Error() != "test(a:hello) *> message" {
 		t.Fatal("DefWrapf doesn't format", err)
@@ -51,7 +45,7 @@ func TestWrapf(t *testing.T) {
 
 func g(arg string) (err error) {
 	defer DefWrapf(&err, "test(arg:%s)", arg)
-	err = New("message")
+	err = errors.New("message")
 	return
 }
 
@@ -60,4 +54,25 @@ func TestDefWrapf(t *testing.T) {
 	if err.Error() != "test(arg:cool) *> message" {
 		t.Fatal("DefWrapf doesn't format with deferring", err)
 	}
+}
+
+func ExampleWrap() {
+	err := errors.New("error")
+	err = Wrap(err, "annotation")
+	fmt.Println(err)
+	// Output: annotation *> error
+}
+
+func ExampleDefWrap() {
+	g := func() error {
+		return errors.New("g(): wrong")
+	}
+	f := func() (err error) {
+		defer DefWrap(&err, "f()")
+		return g()
+	}
+
+	err := f()
+	fmt.Println(err)
+	// Output: f() *> g(): wrong
 }

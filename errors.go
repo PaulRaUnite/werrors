@@ -1,39 +1,35 @@
-// Package provides simplified errors
-// and error tracking.
+/*
+The package provides error tracking and/or
+adding more context to errors (something like function arguments).
+
+Important notes
+
+If you wrap a nil error, you get not nil error.
+So check your error before use Wrap and "friends".
+
+Current realizations of Wrapf, DefWrapf and Error
+cause allocations because of fmt.Printf use.
+*/
 package werrors
 
 import (
 	"fmt"
 )
 
-// errorString is a simplified version of standard
-// Golang errors.errorString type.
-type errorString string
-
-func (e errorString) Error() string {
-	return string(e)
-}
-
-// New is a constructor for errorString type.
-func New(message string) error {
-	return errorString(message)
-}
-
 // tracker is a struct that is used
-// to wrap errors for tracking
-// error path.
+// to wrap errors with annotation.
 type tracker struct {
 	annotation string
 	err        error
 }
 
-func (w tracker) Error() string {
-	return fmt.Sprintf("%s *> %s", w.annotation, w.err.Error())
+// Error is the implementation of error interface.
+func (t tracker) Error() string {
+	return fmt.Sprintf("%s *> %s", t.annotation, t.err.Error())
 }
 
 // Wrap annotates an error with a string.
-// Use it to track paths of errors, as:
-// main *> calc *> error text.
+// See example.
 func Wrap(err error, annotation string) error {
 	return tracker{
 		annotation: annotation,
@@ -42,15 +38,16 @@ func Wrap(err error, annotation string) error {
 }
 
 // Wrapf annotates an error using formatting.
+// Use it as a smart analogue of Wrap.
 func Wrapf(err error, format string, args ...interface{}) error {
 	return tracker{
 		annotation: fmt.Sprintf(format, args...),
-		err: err,
+		err:        err,
 	}
 }
 
-// Cause returns an initial error if
-// err is a tracker.
+// Cause returns the initial
+// error if err is a tracker.
 func Cause(err error) error {
 	c, ok := err.(tracker)
 	if !ok {
@@ -59,15 +56,10 @@ func Cause(err error) error {
 	return Cause(c.err)
 }
 
-// DefWrap annotates an POINTER of
-// error to allow an user use it
+// DefWrap annotates an error referenced
+// by the pointer to allow using wrapping
 // in defer statements.
-// Example:
-// func f() (err error) {
-//   defer DefWrap("text", &err)
-//   //some actions
-//   return
-// }
+// See example.
 func DefWrap(errp *error, annotation string) {
 	if errp != nil {
 		err := *errp
@@ -77,8 +69,8 @@ func DefWrap(errp *error, annotation string) {
 	}
 }
 
-// DefWrapf does everything that DefWrap
-// and Wrapf do.
+// DefWrapf does everything that
+// DefWrap and Wrapf do.
 func DefWrapf(errp *error, format string, args ...interface{}) {
 	if errp != nil {
 		err := *errp
