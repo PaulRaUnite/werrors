@@ -2,7 +2,7 @@
 
 ## Name
 
-werrors := **W**rap **errors**
+werrors := **w**rap **errors**
 
 ## Simple example
 
@@ -53,8 +53,7 @@ Of course, allocation free functions are faster.
 
 **Important**:
   > `tracker.Error` produces cascade of allocations
-  > because of it's recursion nature. It depends of
-  > the nesting of errors.
+  > because of it's recursion nature.
   
 ## Documentation + Examples
 
@@ -89,4 +88,4 @@ In this case, of course.
 It can be helpful to optimize builtin conversion between
 `[]byte` to `string` applying your own conversion 
 in cases of high performance when you are sure 
-in immutability of byte slice, of course.
+in the immutability of byte slice, of course.
