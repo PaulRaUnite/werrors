@@ -1,5 +1,5 @@
 /*
-The package provides error tracking and/or
+Package werrors provides error tracking and/or
 adding more context to errors (something like function arguments).
 
 Important notes

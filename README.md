@@ -1,5 +1,6 @@
 # werrors
-
+[![GoDoc](https://godoc.org/github.com/PaulRaUnite/werrors?status.svg)](https://godoc.org/github.com/PaulRaUnite/werrors)
+[![Go Report Card](https://goreportcard.com/badge/github.com/PaulRaUnite/werrors)](https://goreportcard.com/report/github.com/PaulRaUnite/werrors)
 ## Name
 
 werrors := **w**rap **errors**
@@ -11,8 +12,9 @@ package main
 
 import (
     "errors"
-    "github.com/PaulRaUnite/werrors"
     "fmt"
+    
+    "github.com/PaulRaUnite/werrors"
 )
 
 func main() {
