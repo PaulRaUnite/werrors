@@ -5,6 +5,14 @@ import (
 	"fmt"
 	"testing"
 )
+func TestTracker_Error(t *testing.T) {
+	err := errors.New("error")
+	err = Wrap(err, "ann1")
+	err = Wrap(err, "ann2")
+	if err.Error() != "ann2 *> ann1 *> error" {
+		t.Fatal("error message must be ann2 *> ann1 *> error")
+	}
+}
 
 func TestWrap(t *testing.T) {
 	err := errors.New("message")
