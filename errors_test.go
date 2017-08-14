@@ -76,3 +76,18 @@ func ExampleDefWrap() {
 	fmt.Println(err)
 	// Output: f() *> g(): wrong
 }
+
+func BenchmarkTracker_Error(b *testing.B) {
+	err := errors.New("everything is bad")
+	a := "a"
+	for i := 0; i < 100; i++ {
+		a = a + "a"
+		err = Wrap(err, a)
+	}
+	b.ResetTimer()
+	var out string
+	for i := 0; i < b.N; i++ {
+		out = err.Error()
+	}
+	_ = out
+}
