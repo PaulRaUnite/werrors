@@ -46,7 +46,7 @@ Only `fmt` package.
 
 All functions can be divided into two groups:
 
-Allocation free | With allocation/s
+Allocation free | With allocations
 ----------------|----------------
 `Wrap`          | `Wrapf`
 `DefWrap`       | `DefWrapf`
@@ -54,10 +54,6 @@ Allocation free | With allocation/s
 
 Of course, allocation free functions are faster.
 
-**Important**:
-  > `tracker.Error` produces cascade of allocations
-  > because of it's recursion nature.
-  
 ## Documentation + Examples
 
 See [godoc](https://godoc.org/github.com/PaulRaUnite/werrors)
