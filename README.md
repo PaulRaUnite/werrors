@@ -62,19 +62,9 @@ Of course, allocation free functions are faster.
 
 See [godoc](https://godoc.org/github.com/PaulRaUnite/werrors)
 
-## Collaboration
+## Contributing
 
-Common scheme:
- - Create an issue and discuss a problem
-  (omit it if the issue is small, something like
-   grammar mistake in README :D);
- - Fork repository and commit your changes;
- - Pull request with reference to the issue;
- - Wait for review (maybe with some discussion);
- - Merging.
-
-If your request wasn't merged, don't worry, you always
-can create a fork. :wink:
+[There](/.github/CONTRIBUTING.md) more info.
 
 ## Possible questions
 
@@ -86,9 +76,9 @@ Yes, you can use some hacks (`unsafe` package can give
 you direct access to `[]byte` inside `string`) to bypass
 the constraint and change something inside,
 but don't do it, it's ridiculous. :)
-In this case, of course.
- 
+
+In the case above, of course.<br>
 It can be helpful to optimize builtin conversion between
 `[]byte` to `string` applying your own conversion 
-in cases of high performance when you are sure 
+in cases of high performance and when you are sure 
 in the immutability of byte slice, of course.
