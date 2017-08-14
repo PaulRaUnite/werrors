@@ -92,8 +92,8 @@ func benchmarkTracker_Error(n int, b *testing.B) {
 	_ = out
 }
 
-func BenchmarkTracker_Error1(b *testing.B) {benchmarkTracker_Error(1, b)}
-func BenchmarkTracker_Error4(b *testing.B) {benchmarkTracker_Error(4, b)}
-func BenchmarkTracker_Error8(b *testing.B) {benchmarkTracker_Error(8, b)}
-func BenchmarkTracker_Error32(b *testing.B) {benchmarkTracker_Error(32, b)}
-func BenchmarkTracker_Error128(b *testing.B) {benchmarkTracker_Error(128, b)}
+func BenchmarkTracker_Error1(b *testing.B)   { benchmarkTracker_Error(1, b) }
+func BenchmarkTracker_Error4(b *testing.B)   { benchmarkTracker_Error(4, b) }
+func BenchmarkTracker_Error8(b *testing.B)   { benchmarkTracker_Error(8, b) }
+func BenchmarkTracker_Error32(b *testing.B)  { benchmarkTracker_Error(32, b) }
+func BenchmarkTracker_Error128(b *testing.B) { benchmarkTracker_Error(128, b) }
