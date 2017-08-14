@@ -25,7 +25,47 @@ type tracker struct {
 
 // Error is the implementation of error interface.
 func (t tracker) Error() string {
-	return fmt.Sprintf("%s *> %s", t.annotation, t.err.Error())
+	return string(t.Bytes())
+}
+
+const divider = " *> "
+
+// Bytes returns byte slice of nested annotations and
+// error in the end.
+func (t tracker) Bytes() []byte {
+	//preallocate slice for common nesting
+	annotations := make([]string, 1, 8)
+	annotations[0] = t.annotation
+
+	err := t.err
+	//length of outcome slice
+	needed := len(t.annotation) + len(divider)
+	for {
+		//if next error is tracker also
+		if tr, ok := err.(tracker); ok {
+			//save annotation field and it's length
+			annotations = append(annotations, tr.annotation)
+			needed += len(tr.annotation) + len(divider)
+			err = tr.err
+		} else {
+			break
+		}
+	}
+	//ending error
+	errStr := err.Error()
+	//calculate final length
+	needed += len(errStr)
+
+	//construct outcome
+	outcome := make([]byte, 0, needed)
+	for _, ann := range annotations {
+		//ann1 *> ann2 *> ... *> annN *> ...
+		outcome = append(outcome, ann...)
+		outcome = append(outcome, divider...)
+	}
+	//...error
+	outcome = append(outcome, errStr...)
+	return outcome
 }
 
 // Wrap annotates an error with a string.
