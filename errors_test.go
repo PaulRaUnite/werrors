@@ -77,10 +77,10 @@ func ExampleDefWrap() {
 	// Output: f() *> g(): wrong
 }
 
-func BenchmarkTracker_Error(b *testing.B) {
+func benchmarkTracker_Error(n int, b *testing.B) {
 	err := errors.New("everything is bad")
 	a := "a"
-	for i := 0; i < 100; i++ {
+	for i := 0; i < n; i++ {
 		a = a + "a"
 		err = Wrap(err, a)
 	}
@@ -91,3 +91,9 @@ func BenchmarkTracker_Error(b *testing.B) {
 	}
 	_ = out
 }
+
+func BenchmarkTracker_Error1(b *testing.B) {benchmarkTracker_Error(1, b)}
+func BenchmarkTracker_Error4(b *testing.B) {benchmarkTracker_Error(4, b)}
+func BenchmarkTracker_Error8(b *testing.B) {benchmarkTracker_Error(8, b)}
+func BenchmarkTracker_Error32(b *testing.B) {benchmarkTracker_Error(32, b)}
+func BenchmarkTracker_Error128(b *testing.B) {benchmarkTracker_Error(128, b)}
