@@ -1,12 +1,5 @@
 # Contribution
 
-## Project structure
-
-The repository use [Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html).
-
-Please, follow the link and read the concept
-(if your English is pretty bad, there are a lot of translations).
-
 ## Sequence of actions
 
 - Open an issue and discuss or assign approved existing one to yourself.
