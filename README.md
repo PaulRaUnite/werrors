@@ -51,6 +51,7 @@ Allocation free | With allocations
 `Wrap`          | `Wrapf`
 `DefWrap`       | `DefWrapf`
 `Cause`         | `tracker.Error`
+ &mdash;        | `tracker.Bytes`
 
 Of course, allocation free functions are faster.
 
