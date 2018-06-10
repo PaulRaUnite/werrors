@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"testing"
 )
+
 func TestTracker_Error(t *testing.T) {
 	err := errors.New("error")
 	err = Wrap(err, "ann1")
@@ -85,7 +86,7 @@ func ExampleDefWrap() {
 	// Output: f() *> g(): wrong
 }
 
-func benchmarkTracker_Error(n int, b *testing.B) {
+func benchmarkTrackerError(n int, b *testing.B) {
 	err := errors.New("everything is bad")
 	a := "a"
 	for i := 0; i < n; i++ {
@@ -100,8 +101,8 @@ func benchmarkTracker_Error(n int, b *testing.B) {
 	_ = out
 }
 
-func BenchmarkTracker_Error1(b *testing.B)   { benchmarkTracker_Error(1, b) }
-func BenchmarkTracker_Error4(b *testing.B)   { benchmarkTracker_Error(4, b) }
-func BenchmarkTracker_Error8(b *testing.B)   { benchmarkTracker_Error(8, b) }
-func BenchmarkTracker_Error32(b *testing.B)  { benchmarkTracker_Error(32, b) }
-func BenchmarkTracker_Error128(b *testing.B) { benchmarkTracker_Error(128, b) }
+func BenchmarkTracker_Error1(b *testing.B)   { benchmarkTrackerError(1, b) }
+func BenchmarkTracker_Error4(b *testing.B)   { benchmarkTrackerError(4, b) }
+func BenchmarkTracker_Error8(b *testing.B)   { benchmarkTrackerError(8, b) }
+func BenchmarkTracker_Error32(b *testing.B)  { benchmarkTrackerError(32, b) }
+func BenchmarkTracker_Error128(b *testing.B) { benchmarkTrackerError(128, b) }
