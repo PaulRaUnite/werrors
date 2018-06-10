@@ -1,7 +1,7 @@
 # werrors
 [![GoDoc](https://godoc.org/github.com/PaulRaUnite/werrors?status.svg)](https://godoc.org/github.com/PaulRaUnite/werrors)
 [![Go Report Card](https://goreportcard.com/badge/github.com/PaulRaUnite/werrors)](https://goreportcard.com/report/github.com/PaulRaUnite/werrors)
-[![cover.run go](https://cover.run/go/github.com/PaulRaUnite/werrors.svg)](https://cover.run/go/github.com/PaulRaUnite/werrors)
+ [![cover.run](https://cover.run/go/github.com/PaulRaUnite/werrors.svg?style=flat&tag=golang-1.10)](https://cover.run/go?tag=golang-1.10&repo=github.com%2FPaulRaUnite%2Fwerrors)
 ## Name
 
 werrors := **w**rap **errors**
